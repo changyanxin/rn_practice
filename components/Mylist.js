@@ -26,7 +26,7 @@ import { MessageBarManager } from 'react-native-message-bar';
 
 
 export default class Mylist extends Component {
-	       constructor(){
+	constructor(){
 		super();
 		this.state={
 			data:[1,2,3,4,5,6],

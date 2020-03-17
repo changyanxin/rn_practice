@@ -74,7 +74,7 @@ const App = () => {
                     key='home' 
                     title='首页'
                     icon={
-                      (focused)=><Icon 
+                      ({focused})=><Icon 
                         size={20}
                         color={focused?'red':'blue'} 
                         name='home'
@@ -90,7 +90,7 @@ const App = () => {
                     key='msg' 
                     title='消息'
                     icon={
-                      (focused)=><Icon 
+                      ({focused})=><Icon 
                         size={20}
                         color={focused?'red':'blue'} 
                         name='home'

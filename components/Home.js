@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,ActivityIndicator,Text,ScrollView,StyleSheet,Dimensions,FlatList} from 'react-native'
+import {View,Animated,Easing,ActivityIndicator,Text,ScrollView,StyleSheet,Dimensions,FlatList} from 'react-native'
 import Button from 'react-native-button';
 import { MessageBarManager } from 'react-native-message-bar';
 import {Actions} from 'react-native-router-flux';
@@ -11,7 +11,9 @@ import {Actions} from 'react-native-router-flux';
 // import Icon from 'react-native-vector-icons/FontAwesome';
  // <Icon color="red" name='chevron-left'/>
 // numColumns={}表示FlatList属性中的分栏布局
-
+// ActivityIndicator表示数据加载
+// Animated.timing()表示动画值随时间变化，timing可变成spring有反弹效果动画
+// easing表示动画的效果。
 
 export default class Home extends Component {
 	constructor(){
@@ -21,12 +23,33 @@ export default class Home extends Component {
 			data.push({tit:i,key:i});
 		}
 		this.state={
-			data
+			data,
+			wid:new Animated.Value(10)
 		}
+	}
+	zoom=()=>{
+		Animated.timing(this.state.wid,{
+			toValue:200,
+			easing:Easing.elastic()
+		}).start()
 	}
 	render(){
 		return(
 			<View>
+				<Button
+					onPress={()=>{this.zoom()}}
+					style={styles.btn}
+				>
+					变大
+				</Button>
+				<Animated.View style={{
+					width:this.state.wid,
+					height:200,
+					backgroundColor:'red'
+				}}>
+
+				</Animated.View>
+
 				<ActivityIndicator style={{color:'red'}}/>
 				<Button
 					onPress={()=>Actions.mylist()}

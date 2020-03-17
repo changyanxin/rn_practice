@@ -1,15 +1,50 @@
 import React, {Component} from 'react';
-import {View,Text,Button,StyleSheet} from 'react-native'
+import {View,Animated,Text,Button,StyleSheet} from 'react-native'
 import {Actions} from 'react-native-router-flux'
+import {WebView} from 'react-native-webview'
+// 使用Animated，将Lightbox弹框变为淡入效果
 
 export default class Mybox extends Component {
-	render(){
+	constructor(){
+        super();
+        this.state={
+            opacity:new Animated.Value(0)
+        }
+    }
+    componentDidMount(){
+        Animated.timing(this.state.opacity,{
+            toValue:1,
+            duration:5000
+        }).start()
+    }
+    back=()=>{
+        Animated.timing(this.state.opacity,{
+            toValue:0,
+            duration:2000
+        }).start(Actions.pop)
+    }
+    render(){
 		return(
-			<View style={{flex:1}}>
+			<View>
+                <WebView
+                    source={{uri:'https://www.baidu.com'}}
+                />
 				<View style={styles.container}>
-                    <View style={styles.innerBox}>
-                         <Button title='返回' onPress={Actions.pop}/>
-                    </View>
+                    <Animated.View 
+                        style={
+                            [
+                                {opacity:this.state.opacity},
+                                styles.innerBox
+                            ]
+                        }
+                    >
+                         <Button 
+                            title='返回' 
+                            onPress={
+                                this.back
+                            }
+                        />
+                    </Animated.View>
                 </View>
 			</View>
 		)
